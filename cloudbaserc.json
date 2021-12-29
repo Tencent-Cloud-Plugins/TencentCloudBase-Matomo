@@ -1,5 +1,5 @@
 {
-	"version": "4.2.1",
+	"version": "2.0",
 	"envId": "{{env.ENV_ID}}",
 	"framework": {
 		"name": "Matomo",
