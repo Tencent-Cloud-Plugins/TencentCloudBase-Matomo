@@ -1,0 +1,61 @@
+{
+	"version": "4.2.1",
+	"envId": "{{env.ENV_ID}}",
+	"framework": {
+		"name": "Matomo",
+		"plugins": {
+			"client": {
+				"use": "@cloudbase/framework-plugin-container",
+				"inputs": {
+					"serviceName": "matomo",
+					"servicePath": "/",
+					"uploadType": "image",
+					"cpu": 1,
+					"mem": 2,
+					"imageInfo": {
+						"imageUrl": "ccr.ccs.tencentyun.com/tcbimages/matomo:4.2.1"
+					},
+					"containerPort": 8080,
+					"envVariables": {
+						"MATOMO_DATABASE_HOST": "{{env.DB_IP}}",
+						"MATOMO_DATABASE_PORT_NUMBER": "{{env.DB_PORT}}",
+						"MATOMO_DATABASE_NAME": "matomo",
+						"MATOMO_DATABASE_USER": "{{env.MYSQL_USERNAME}}",
+						"MATOMO_DATABASE_PASSWORD": "{{env.MYSQL_PASSWORD}}",
+						"MYSQL_CLIENT_DATABASE_HOST": "{{env.DB_IP}}",
+						"MYSQL_CLIENT_DATABASE_PORT_NUMBER": "{{env.DB_PORT}}",
+						"MYSQL_CLIENT_DATABASE_ROOT_USER": "{{env.MYSQL_USERNAME}}",
+						"MYSQL_CLIENT_DATABASE_ROOT_PASSWORD": "{{env.MYSQL_PASSWORD}}",
+						"MYSQL_CLIENT_CREATE_DATABASE_NAME": "matomo",
+						"TCB_NOT_SHOW_CYNOS_DB": "${Outputs.matomo.Properties.InstanceId}"
+					},
+					"initialDelaySeconds": 10
+				}
+			}
+		},
+		"requirement": {
+			"addons": [{
+				"type": "CynosDB",
+				"name": "matomo",
+				"envMap": {
+					"IP": "DB_IP",
+					"PORT": "DB_PORT",
+					"USERNAME": "MYSQL_USERNAME",
+					"PASSWORD": "MYSQL_PASSWORD"
+				}
+			}],
+			"environment": {
+				"MATOMO_USERNAME": {
+					"description": "用户名",
+					"required": true,
+					"default": "admin"
+				},
+				"MATOMO_PASSWORD": {
+					"description": "用户密码",
+					"required": true,
+					"default": "admin@123"
+				}
+			}
+		}
+	}
+}
